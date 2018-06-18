@@ -185,6 +185,33 @@ typedef struct {
     .supports_qspi_writes = false, \
 }
 
+// KDB - Added - this is what we use in Spectacle Directory Board. Just change startup time based on spec
+// Settings for the Winbond W25Q32FV 4MiB SPI flash.
+// Datasheet:http://www.winbond.com/resource-files/w25q32fv%20revj%2006032016.pdf?__locale=en
+//
+// From the data sheet: id: 0xef, cap: 0x15, type: 0x4016 (spi) 0x6016 (qpi). (top byte: 0x40, 0x60)
+// From trial and error, I got the following to work for SFE Spectacle: 
+//      man:    0xef
+//      type:   0x40
+//      cap:    0x16
+
+
+#define W25Q32FV {\
+    .total_size = (1 << 22), /* 4 MiB */ \
+    .start_up_time_us = 5000, \
+    .manufacturer_id = 0xef, \
+    .memory_type = 0x40, \
+    .capacity = 0x16, \
+    .max_clock_speed_mhz = 104, \
+    .has_sector_protection = false, \
+    .supports_fast_read = true, \
+    .supports_qspi = false, \
+    .has_quad_enable = false, \
+    .supports_qspi_writes = false, \
+}
+
+// END KDB HACK
+//_________________
 // Settings for the Winbond W25Q80DL 1MiB SPI flash.
 // Datasheet: https://www.winbond.com/resource-files/w25q80dv%20dl_revh_10022015.pdf
 #define W25Q80DL {\
